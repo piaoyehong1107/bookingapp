@@ -1,5 +1,6 @@
 import express from "express";
 import Hotel from "../models/Hotel.js";
+import { createError } from "../utils/error.js";
 
 const router = express.Router();
 //CREATE
@@ -49,7 +50,7 @@ router.get("/", async (req, res, next) => {
     const hotels = await Hotel.find();
     res.status(200).json(hotels);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 });
 export default router;
