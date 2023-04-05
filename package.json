@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/piaoyehong1107/bookingapp#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.18.2"
   }
 }
