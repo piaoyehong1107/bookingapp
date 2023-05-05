@@ -38,10 +38,8 @@ export const getHotel = async (req, res, next) => {
   }
 };
 export const getHotels = async (req, res, next) => {
-  console.log(req.query);
   const { min, max, limit, ...others } = req.query;
-  console.log({ min, max, limit, ...others });
-  // const limitNum = parseInt(limit);
+  // console.log({ min, max, limit, ...others });
   try {
     const hotels = await Hotel.find({
       ...others,
