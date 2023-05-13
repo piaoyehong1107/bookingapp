@@ -1,27 +1,54 @@
 import {useContext, useState} from "react"
 import "./login.css"
 import { AuthContext } from "../../context/AuthContext"
+import axios from "axios"
 
 
 const Login = () => {
-    cosnt[credentials, setCredentials] = useState({
+    const [credentials, setCredentials] = useState({
         username: undefined,
         password: undefined
     })
 
-    const { loading,error,dispatch} = useContext(AuthContext)
+    const { user, loading, error, dispatch} = useContext(AuthContext)
     const handleChange = (e) => { 
         setCredentials(prev => ({...prev,[e.target.id]: e.target.value}))
     }
-    const handleClick = () => { 
-        
+    const handleClick = async (e) => { 
+        e.preventDefault();
+        dispatch({ type: "LOGIN_START" })
+        try { 
+            const res = await axios.post("/auth/login", credentials)
+            dispatch({type: "LOGIN_SUCCESS", payload: res.data})
+        }
+        catch (err) { 
+            dispatch({type:"LOGIN_FAILURE", payload: err.response.data})
+        }
     }
+    console.log(user)
+
     return (
-        <div className="Login">
+        <div className="login">
             <div className="lContainer">
-                <input type="text" placeholder="username" id="username" onChange={handleChange} className="lInput" />
-                <input type="text" placeholder="password" id="password" onChange={handleChange} className="lInput" />
-                <button onClick={ handleClick} className="lButton">Login</button>
+                <input
+                    type="text"
+                    placeholder="username"
+                    id="username"
+                    onChange={handleChange}
+                    className="lInput"
+                />
+                <input
+                    type="text"
+                    placeholder="password"
+                    id="password"
+                    onChange={handleChange}
+                    className="lInput"
+                />
+                <button
+                    onClick={handleClick}
+                    className="lButton">
+                    Login
+                </button>
                 {error && <span>{ error.message}</span>}
             </div>
     </div>
